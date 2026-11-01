@@ -1,1 +1,74 @@
-<html><body><h1>KCSE ULTIMATE LIVE 0181628290</h1><p>Form 3 F1-F3 + Form 4 F1-F4</p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCSE ULTIMATE | Till 0181628290</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#0a0f1e;color:#fff}
+.header{background:linear-gradient(135deg,#001a4d,#0033a0);padding:18px;text-align:center;border-bottom:3px solid #ffcc00}
+.header h1{font-size:22px;color:#ffcc00}
+.badge{display:inline-block;background:#ffcc00;color:#001a4d;padding:3px 10px;border-radius:20px;font-weight:800;font-size:11px;margin:5px}
+.price-box{background:#111a33;border:1px solid #1e3a8a;border-radius:14px;margin:14px;padding:14px;text-align:center}
+.price{font-size:32px;font-weight:900;color:#ffcc00}
+.till{background:#000;border:2px dashed #ffcc00;border-radius:10px;padding:10px;margin:10px 0}
+.till b{color:#ffcc00;font-size:20px}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:10px;font-weight:800;font-size:15px;cursor:pointer;margin:8px 0;text-align:center;text-decoration:none}
+.btn-pay{background:linear-gradient(90deg,#00c853,#00e676);color:#000}
+.btn-wa{background:#25D366;color:#fff}
+.tabs{display:flex;gap:8px;padding:0 14px}
+.tab{flex:1;padding:12px;background:#1a2340;border-radius:10px 10px 0 0;text-align:center;font-weight:800;cursor:pointer}
+.tab.active{background:#ffcc00;color:#001a4d}
+.content{background:#0f1730;margin:0 14px 14px;border-radius:0 0 14px 14px;padding:12px}
+.subject{background:#162147;border-radius:10px;padding:10px;margin:8px 0;display:flex;justify-content:space-between}
+.lock{font-size:10px;background:#ff3d00;color:#fff;padding:2px 6px;border-radius:4px}
+.pay-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;padding:16px}
+.pay-card{background:#111c3a;border:2px solid #ffcc00;border-radius:16px;padding:16px;max-width:420px;margin:20px auto}
+input{width:100%;padding:12px;border-radius:8px;border:1px solid #2a3a6a;background:#0a1230;color:#fff;margin:6px 0}
+.small{font-size:11px;opacity:.7}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>KCSE ULTIMATE COLLECTION</h1>
+<p>FORM 3: F1-F3 | FORM 4: F1-F4 Full Syllabus</p>
+<span class="badge">ALL SUBJECTS</span><span class="badge">MARKING SCHEMES</span>
+</div>
+<div class="price-box">
+<div>One-Time - Lifetime Access</div>
+<div class="price">KSh 300</div>
+<div class="till">LIPA NA M-PESA TILL:<br><b>0181628290</b><br><span class="small">EEANO STORE - Locked</span></div>
+<button class="btn btn-pay" onclick="openPay()">🔓 PAY & UNLOCK - KSh 300</button>
+<a class="btn btn-wa" href="https://wa.me/254181628290?text=Hi%20paid%20to%200181628290%20KCSE" target="_blank">💬 WHATSAPP 254181628290</a>
+</div>
+<div class="tabs">
+<div class="tab active" onclick="showTab('f3')">FORM 3 (F1-F3)</div>
+<div class="tab" onclick="showTab('f4')">FORM 4 (F1-F4)</div>
+</div>
+<div class="content" id="f3"><h3 style="color:#ffcc00">Form 3 Cumulative</h3><div id="list-f3"></div></div>
+<div class="content" id="f4" style="display:none"><h3 style="color:#ffcc00">Form 4 Full F1-F4</h3><div id="list-f4"></div></div>
+<div class="pay-modal" id="payModal">
+<div class="pay-card">
+<h2 style="color:#ffcc00;text-align:center">Unlock</h2>
+<div class="till" style="text-align:center">Till: <b>0181628290</b><br>Amount: 300</div>
+<p class="small">1. M-Pesa → Lipa na M-Pesa → Buy Goods<br>2. Till: <b>0181628290</b><br>3. Amount 300 → Send<br>4. Paste M-Pesa Code below</p>
+<input id="mpesaCode" placeholder="M-Pesa Code e.g. QGH7R...">
+<input id="phone" placeholder="Your Phone 07...">
+<button class="btn btn-pay" onclick="verifyPay()">VERIFY & UNLOCK</button>
+<button class="btn" style="background:#222;color:#fff" onclick="closePay()">Cancel</button>
+</div>
+</div>
+<script>
+const LOCKED_TILL="0181628290";const LOCKED_WA="254181628290";
+const subjectsF3=["Mathematics F1-F3 Notes+Topical","English F1-F3 Grammar+Setbooks","Kiswahili F1-F3","Biology F1-F3","Chemistry F1-F3","Physics F1-F3","History F1-F3","Geography F1-F3","CRE F1-F3","Business F1-F3","Agriculture F1-F3","Computer F1-F3"];
+const subjectsF4=["Mathematics F1-F4 + Prediction","English F1-F4 Setbooks","Kiswahili F1-F4","Biology F1-F4 +100 Papers","Chemistry F1-F4 + Schemes","Physics F1-F4 Practicals","History F1-F4","Geography F1-F4","CRE F1-F4","Agriculture F1-F4","Business F1-F4","Computer F1-F4","Past Papers 2015-2024","Marking Schemes","Prediction 2026"];
+function render(){let h="";subjectsF3.forEach(s=>{h+=`<div class="subject"><span>${s}</span><span class="lock">LOCKED</span></div>`});document.getElementById('list-f3').innerHTML=h;h="";subjectsF4.forEach(s=>{h+=`<div class="subject"><span>${s}</span><span class="lock">LOCKED</span></div>`});document.getElementById('list-f4').innerHTML=h;}
+function showTab(t){document.getElementById('f3').style.display=t==='f3'?'block':'none';document.getElementById('f4').style.display=t==='f4'?'block':'none';document.querySelectorAll('.tab').forEach((el,i)=>{el.classList.toggle('active',(i===0&&t==='f3')||(i===1&&t==='f4'))});}
+function openPay(){document.getElementById('payModal').style.display='block';}
+function closePay(){document.getElementById('payModal').style.display='none';}
+function verifyPay(){let c=document.getElementById('mpesaCode').value.trim();let p=document.getElementById('phone').value.trim();if(c.length<8){alert("Enter valid code from Till "+LOCKED_TILL);return;}if(p.length<9){alert("Enter phone");return;}alert("Code "+c+" received! Verify via WhatsApp "+LOCKED_WA);window.open(`https://wa.me/${LOCKED_WA}?text=Paid%20KSh300%20to%20Till%20${LOCKED_TILL}%20Code:%20${c}%20Phone:%20${p}%20KCSE%20Ultimate`,"_blank");closePay();}
+render();
+</script>
+</body>
+</html>
